@@ -25,10 +25,9 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
-        System.out.println("tentativa de login feita pelo usuario" + body.email());
+        System.out.println("tentativa de login pelo usuario" + body.email());
         User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
